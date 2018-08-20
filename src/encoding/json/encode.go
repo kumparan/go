@@ -728,8 +728,9 @@ type sliceEncoder struct {
 }
 
 func (se *sliceEncoder) encode(e *encodeState, v reflect.Value, opts encOpts) {
-	if v.IsNil() {
-		e.WriteString("null")
+	if v.Len() == 0 {
+		e.WriteByte('[')
+		e.WriteByte(']')
 		return
 	}
 	se.arrayEnc(e, v, opts)
